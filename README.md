@@ -1,94 +1,80 @@
 # FIT Altitude Tool 🛰️⛰️
 
-**FIT Altitude Tool** est une application Desktop Python permettant d'enrichir facilement les fichiers d'activités sportives au format `.FIT` (Garmin, Amazfit, Wahoo, etc.) avec des altitudes précises issues du modèle d'élévation **Copernicus GLO-30 (COP30)** via l'API **OpenTopography**.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 
-L'application préserve l'intégralité des métriques d'origine (fréquence cardiaque, cadence, puissance, etc.) et ne modifie que les altitudes manquantes ou imprécises de vos traces GPS.
+**English** | [Français](README_FR.md)
 
----
+**FIT Altitude Tool** is a standalone Windows desktop application designed to easily fix, enrich, and correct elevation data in `.FIT` activity files (Garmin, Amazfit, Wahoo, Coros, Strava, Suunto) using high-precision **Copernicus GLO-30 (COP30 30-meter DEM)** elevation data fetched via the **OpenTopography API**.
 
-## ✨ Fonctionnalités
-
-- 📁 **Glisser-Déposer (Drag & Drop)** : Déposez directement vos fichiers `.fit` ou dossiers complets dans l'interface.
-- 🗺️ **Modèle Copernicus COP30 (30m)** : Récupération des altitudes haute résolution basées sur le modèle altimétrique global Copernicus.
-- ⚡ **Cache Local SQLite & Interpolation** : Les tuiles altimétriques brutes GeoTIFF sont conservées en cache local (`%LOCALAPPDATA%\FITAltitudeTool\altitude_cache.db`). L'altitude exacte est calculée localement par interpolation bilinéaire sans requêtes inutiles.
-- 🔑 **Gestion Intégrée de la Clé API** : Guide pas-à-pas et assistant d'enregistrement pour la clé OpenTopography stockée en toute sécurité.
-- 📦 **Exécutable Windows Autonome** : Compilation simple en un seul fichier `.exe` via PyInstaller sans dépendances requises pour l'utilisateur final.
+It preserves all original fitness metrics (heart rate, cadence, power, speed, timestamps) and only replaces or fixes missing/inaccurate elevation data in your GPS tracks.
 
 ---
 
-## 📁 Structure du Projet
+## ✨ Features
 
-```text
-fit-altitude-tool/
-├── app.py                 # Point d'entrée de l'application Tkinter
-├── build_exe.bat          # Script d'auto-compilation Windows (.exe)
-├── FIT Altitude Tool.spec # Fichier de spécification PyInstaller
-├── requirements.txt       # Dépendances Python
-├── LICENSE                # Licence Open-Source (MIT)
-├── README.md              # Documentation
-├── src/                   # Code source de l'application
-│   ├── __init__.py
-│   ├── ui.py              # Interface graphique (Tkinter/TkinterDND)
-│   ├── fit_processor.py   # Lecture, traitement et écriture des fichiers FIT
-│   ├── altitude_provider.py# Interaction avec OpenTopography & interpolation
-│   ├── cache.py           # Base SQLite locale & gestion des cellules GeoTIFF
-│   └── settings.py        # Gestion de la configuration utilisateur
-└── tests/                 # Tests unitaires automatisés
-    └── test_fit_processor.py
-```
+- 📁 **Drag & Drop**: Easily drop `.fit` files or entire folders directly into the user interface.
+- 🗺️ **High-Resolution Elevation (Copernicus COP30)**: Correct inaccurate barometric or GPS elevation data with official 30-meter global elevation models.
+- ⚡ **Local SQLite Cache & Bilinear Interpolation**: GeoTIFF DEM tiles are cached locally (`%LOCALAPPDATA%\FITAltitudeTool\altitude_cache.db`). Exact elevation values are interpolated locally without redundant network requests.
+- 🔑 **API Key Management**: Easy built-in guided setup for your free OpenTopography API key.
+- 📦 **Standalone Windows Executable**: One-click `.exe` download with no Python installation required for end-users.
 
 ---
 
-## 🚀 Installation & Lancement (Mode Développement)
+## 📥 Download Executable
 
-### Prérequis
-- **Python 3.10+** (recommandé)
+You can download the pre-compiled **Windows `.exe`** binary directly from the **Releases** page on GitHub.
 
-### 1. Cloner le dépôt et installer les dépendances
+1. Download `FIT_Altitude_Tool.exe` from the latest release.
+2. Double-click to launch (no installer required).
+
+---
+
+## 🔑 Getting an OpenTopography API Key
+
+Accessing COP30 elevation data requires a free personal API key from **OpenTopography**:
+
+1. Create a free account at [portal.opentopography.org](https://portal.opentopography.org/myopentopo).
+2. Go to **MyOpenTopo** > **myTopography Authorizations / API Key**.
+3. Generate your API key.
+4. In **FIT Altitude Tool**, go to **Options > OpenTopography API Key...**, paste your key, and click **Save**.
+
+> *Note: You can also export `OPENTOPO_API_KEY` as an environment variable.*
+
+---
+
+## 🚀 Development Setup
+
+### Prerequisites
+- **Python 3.10+**
+
+### 1. Clone repository & install dependencies
 ```powershell
 git clone https://github.com/votre-utilisateur/fit-altitude-tool.git
 cd fit-altitude-tool
 
-# Créer un environnement virtuel
+# Create a virtual environment
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
-# Installer les dépendances
+# Install dependencies
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 2. Lancer l'application
+### 2. Run Application
 ```powershell
 python app.py
 ```
 
----
-
-## 🔑 Obtenir et Configurer une Clé API OpenTopography
-
-L'accès aux données altimétriques COP30 nécessite une clé API personnelle gratuite auprès d'**OpenTopography** :
-
-1. Créez un compte gratuit sur [portal.opentopography.org](https://portal.opentopography.org/myopentopo).
-2. Rendez-vous dans **MyOpenTopo** > **myTopography Authorizations / API Key**.
-3. Générez votre clé API.
-4. Dans l'application, allez dans **Options > Clé API OpenTopography...**, collez votre clé et cliquez sur **Enregistrer**.
-
-> *Note : Vous pouvez aussi définir la variable d'environnement `OPENTOPO_API_KEY`.*
-
----
-
-## 🛠️ Générer l'Exécutable Windows (`.exe`)
-
-Pour compiler l'application en un fichier `.exe` autonome (situé dans le dossier `dist/`) :
-
+### 3. Build Windows Executable (`.exe`)
 ```powershell
 .\build_exe.bat
 ```
 
 ---
 
-## 🧪 Exécuter les Tests Unitaires
+## 🧪 Running Unit Tests
 
 ```powershell
 py -m unittest discover tests
@@ -96,9 +82,34 @@ py -m unittest discover tests
 
 ---
 
-## 📜 Licence & Attributions
+## �� Project Structure
 
-Ce projet est distribué sous licence [MIT](LICENSE).
+```text
+fit-altitude-tool/
+├── app.py                 # Tkinter Application Entry Point
+├── build_exe.bat          # PyInstaller Windows build script
+├── FIT Altitude Tool.spec # PyInstaller configuration
+├── requirements.txt       # Python dependencies
+├── LICENSE                # MIT License
+├── README.md              # Documentation (English)
+├── README_FR.md           # Documentation (French)
+├── src/                   # Core application source code
+│   ├── __init__.py
+│   ├── ui.py              # User Interface (Tkinter / TkinterDND)
+│   ├── fit_processor.py   # FIT file reader, altitude updating & writer
+│   ├── altitude_provider.py# OpenTopography API integration & bilinear interpolation
+│   ├── cache.py           # Local SQLite storage & GeoTIFF tile management
+│   └── settings.py        # User settings & configuration manager
+└── tests/                 # Automated unit tests
+    └── test_fit_processor.py
+```
 
-- **Données d'élévation** : Copernicus DEM GLO-30 fourni par l'Agence Spatiale Européenne (ESA).
-- **Service API** : [OpenTopography](https://opentopography.org/). Merci de respecter les conditions d'utilisation d'OpenTopography et de citer leurs services dans vos projets dérivés.
+---
+
+## 📜 License & Attributions
+
+Distributed under the [MIT License](LICENSE).
+
+- **Elevation Data**: Copernicus DEM GLO-30 provided by the European Space Agency (ESA).
+- **API Service**: [OpenTopography](https://opentopography.org/).
+
