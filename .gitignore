@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Caches and databases
+*.db
+*.db-journal
+*.sqlite
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Build and distribution outputs
+build/
+dist/
+*.egg-info/
+
+# IDE & Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.log
+
+# Test & personal FIT files
+_test files/
+*.fit
+*.tmp

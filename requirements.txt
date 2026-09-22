@@ -1,0 +1,7 @@
+fitdecode>=0.10.0
+fit-tool>=0.9.16
+requests>=2.32.0
+tifffile>=2025.5.10
+pyinstaller>=6.10.0
+tkinterdnd2>=0.4.0
+imagecodecs
